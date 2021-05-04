@@ -8,7 +8,9 @@ let _db;
 //method to excute mongoclient function
 const mongoConnect = callback => {
     //using mongoclient to connect to a db
-    MongoClient.connect('mongodb+srv://deisianepureza:Dp30101989@webappca2.txa5a.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
+    MongoClient.connect(
+        'mongodb+srv://deisianepureza:Dp30101989@webappca2.txa5a.mongodb.net/ca2bookshop?retryWrites=true&w=majority'
+    )
     .then(client => {
     console.log('Connected!');
     //storing the connection to the db
