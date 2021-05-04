@@ -4,12 +4,13 @@ const getDb = require('../helper/database').getDb;
 
 //constructor method to create a new object 
 class Product {
-  constructor(title, price, description, imageUrl, _id) {
+  constructor(title, price, description, imageUrl, _id, userId) {
     this.title = title;
     this.price = price;
     this.description = description;
     this.imageUrl = imageUrl;
     this._id = _id ? new mongodb.ObjectId(_id) : null;
+    this.userId = userId;
   }
 
   //save data method 
