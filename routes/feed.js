@@ -35,7 +35,9 @@ router.post('/post',
      body('content')
      .trim()
      .isLength({ min: 5})
- ]);
+ ],
+ feedController.updatePost
+ );
 
 //exporting the router 
 module.exports = router;
