@@ -1,41 +1,27 @@
-const path = require('path');
-
+//importing express
 const express = require('express');
+const bodyparser = require('body-parser');
+
+//importing feed routes
+const feedRoutes = require('./routes/feed');
 const bodyParser = require('body-parser');
 
-const errorController = require('./controllers/error');
-const mongoConnect = require('./helper/database').mongoConnect;
-
-//importing user
-const User = require('./models/user');
-
+//executing express as function to create my app express
 const app = express();
 
-app.set('view engine', 'ejs');
-app.set('views', 'views');
+//initializing bodyparser calling by enconded
+//app.use(bodyParser.urlencoded()); //x-www-form-urlencoded <form>
+//middleware to parse incoming json data
+app.use(bodyParser.json()); //aplication/json
 
-const adminRoutes = require('./routes/admin');
-const shopRoutes = require('./routes/shop');
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
-
-//method to find user and store in the request
 app.use((req, res, next) => {
-    User.findById('')
-        .then(user => {
-            req.user = new User(user.name, user.email, user.cart, user._id);
-            next();
-        })
-        .catch(err => console.log(err));
-});
+    res.setHeader('Acess-Control-Allow-Origin', '*');
+    res.setHeader('Acess-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
+    res.setHeader('Acess-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+})
 
-app.use('/admin', adminRoutes);
-app.use(shopRoutes);
+//foward incoming requests
+app.use('/feed',feedRoutes);
 
-app.use(errorController.get404);
-
-mongoConnect(() => {
-    app.listen(3000);
-});
-
+app.listen(8080);
