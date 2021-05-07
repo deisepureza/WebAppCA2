@@ -1,8 +1,8 @@
 //setting express router 
 const express = require('express');
 // importing from express validator package
-//const { body } = require('express-validator/check');
-const { body } = require('express-validator');
+const { body } = require('express-validator/check');
+//const { body } = require('express-validator');
 
 //importng feed controllers
 const feedController = require('../controllers/feed');
@@ -38,6 +38,9 @@ router.post('/post',
  ],
  feedController.updatePost
  );
+
+ //delete router
+ router.delete('/post/:postId', feedController.deletePost);
 
 //exporting the router 
 module.exports = router;

@@ -8,10 +8,10 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const multer = require('multer');
 
-//importing feed routes
+//importing   routes
 const feedRoutes = require('./routes/feed');
-//const bodyParser = require('body-parser');
-const { Result } = require('express-validator');
+const authRoutes = require('./routes/auth');
+//const { Result } = require('express-validator');
 
 //executing express as function to create my app express
 const app = express();
@@ -55,13 +55,15 @@ app.use((req, res, next) => {
 
 //foward incoming requests
 app.use('/feed',feedRoutes);
+app.use('/auth', authRoutes);
 
 //error function
 app.use((error, req, res, next) => {
     console.log(error);
     const status = error.statusCode || 500;
     const message = error.message;
-    res.status(status).json({message: message });
+    const data = error.data;
+    res.status(status).json({message: message, data: data });
 });
 
 //db connection
