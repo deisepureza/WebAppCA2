@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const multer = require('multer');
 const helmet = require('helmet');
+const morgan = require('morgan');
 
 //importing   routes
 const feedRoutes = require('./routes/feed');
@@ -49,6 +50,7 @@ const fileFilter = (req, file, cb) => {
 //middleware to parse incoming json data
 app.use(bodyParser.json()); //aplication/json
 app.use(helmet());
+app.use(morgan('combined'));
 app.use(multer({storage: fileStorage, fileFilter: fileFilter}).single('image'));
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
