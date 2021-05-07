@@ -19,7 +19,7 @@ const app = express();
 //file storage control
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'img');
+        cb(null, 'images');
     },
     filename: (req, file, cb) => {
         cb(null, new Date().toISOString() + '-' + file.originalname);
@@ -29,9 +29,9 @@ const fileStorage = multer.diskStorage({
 //image file filer
 const fileFilter = (req, file, cb) => {
     if (
-        file.mimetype === 'img/png' ||
-        file.mimetype === 'img/jpg' ||
-        file.mimetype === 'img/jpeg'
+        file.mimetype === 'image/png' ||
+        file.mimetype === 'image/jpg' ||
+        file.mimetype === 'image/jpeg'
     ) { 
         cb(null, true); 
     } else {
@@ -41,10 +41,10 @@ const fileFilter = (req, file, cb) => {
 //initializing bodyparser calling by enconded
 //app.use(bodyParser.urlencoded()); //x-www-form-urlencoded <form>
 //middleware to parse incoming json data
-//app.use(bodyParser.json()); //aplication/json
+app.use(bodyParser.json()); //aplication/json
 app.use(multer({storage: fileStorage, fileFilter: fileFilter}).single('image'));
 
-app.use('/img', express.static(path.join(__dirname, 'img')));
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use((req, res, next) => {
     res.setHeader('Acess-Control-Allow-Origin', '*');

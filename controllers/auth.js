@@ -1,6 +1,7 @@
-const {validationResult} = require('express-validator/check');
+const { validationResult } = require('express-validator/check');
 const bcrypt = require('bcryptjs');
 const jsonwebt = require('jsonwebtoken');
+
 
 //importing user model
 const User = require('../models/user');
@@ -10,24 +11,24 @@ exports.signup = (req, res, next) => {
     //logic to create a user in db
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        const error = new Error('Validation was failed.');
-        error.statusCode = 422;
-        error.data = erros.array();
-        throw error;
+      const error = new Error('Validation failed.');
+      error.statusCode = 422;
+      error.data = errors.array();
+      throw error;
     }
     const email = req.body.email;
     const name = req.body.name;
     const password = req.body.password;
     bcrypt
-        .hash(password, 12)
-        .then(hashedPw => {
-            const user = new User({
-                email: email,
-                password: password,
-                name: name
-            });
-            return user.save();
-        }) //to get db result
+      .hash(password, 12)
+      .then(hashedPw => {
+        const user = new User({
+          email: email,
+          password: hashedPw,
+          name: name
+        });
+        return user.save();
+      })//to get db result
         .then(result => {
             res.status(201).json({ message: 'User was created!', userId: result._id})
         })
