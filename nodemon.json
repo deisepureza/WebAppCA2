@@ -1,0 +1,7 @@
+{
+    "env": {
+        "MONGO_USER": "deisianepureza",
+        "MONGO_PASSWORD": "Dp30101989",
+        "MONGO_DE FAULT_DATABASE": "blogmessages"
+    }
+}

@@ -2,10 +2,12 @@
   "name": "webappca2",
   "version": "1.0.0",
   "description": "CA2",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start": "MONGO_USER=deisianepureza MONGO_PASSWORD=Dp30101989 node app.js",
+    "start-server": "node app.js",
+    "start:ca2dev": "nodemon app.js"
   },
   "repository": {
     "type": "git",

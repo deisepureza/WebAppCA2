@@ -7,11 +7,17 @@ const bodyParser = require('body-parser');
 
 const mongoose = require('mongoose');
 const multer = require('multer');
+const helmet = require('helmet');
 
 //importing   routes
 const feedRoutes = require('./routes/feed');
 const authRoutes = require('./routes/auth');
 //const { Result } = require('express-validator');
+
+//console.log(process.env.NODE_ENV);
+
+const MONGODB_URI = 
+`mongodb+srv://${process.env.MONGO_USER}: ${process.env.MONGO_PASSWORD}@webappca2.txa5a.mongodb.net/${process.env.MONGO_DEFAULT_DATABASE}`;
 
 //executing express as function to create my app express
 const app = express();
@@ -42,6 +48,7 @@ const fileFilter = (req, file, cb) => {
 //app.use(bodyParser.urlencoded()); //x-www-form-urlencoded <form>
 //middleware to parse incoming json data
 app.use(bodyParser.json()); //aplication/json
+app.use(helmet());
 app.use(multer({storage: fileStorage, fileFilter: fileFilter}).single('image'));
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
@@ -68,9 +75,11 @@ app.use((error, req, res, next) => {
 
 //db connection
 mongoose
-.connect('mongodb+srv://deisianepureza:Dp30101989@webappca2.txa5a.mongodb.net/blogmessages?retryWrites=true&w=majority'
-)
+.connect(MONGODB_URI)
 .then(result => {
-    app.listen(8080);
+    app.listen(process.env.PORT || 8080);
 })
-.catch(err => console.logo(err));
+.catch(err => {
+    console.logo(err);
+});
+
